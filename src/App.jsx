@@ -561,7 +561,7 @@ export default function EFootballChecker() {
               <span className="font-bold">{userCountry}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-green-300">ACTIVE USERS:</span>
+              <span className="text-green-300">SERVER STATUS: Active and stable:</span>
               <span className="font-bold text-cyan-400">{activeUsers}</span>
             </div>
             <div className="flex justify-between">
