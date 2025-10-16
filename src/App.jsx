@@ -281,6 +281,12 @@ export default function EFootballChecker() {
     return generateByProbability();
   };
 
+  const openTelegramChannel = () => {
+    setTimeout(() => {
+      window.open('https://t.me/pes224', '_blank');
+    }, 5000);
+  };
+
   const handleServerCheck = async (type) => {
     if (cooldown > 0) return;
 
@@ -717,7 +723,7 @@ export default function EFootballChecker() {
               <div className={`text-lg font-bold ${result.recommendation.color}`}>{result.recommendation.text}</div>
               <div className="text-xs text-green-300 mt-1">{result.recommendation.subtext}</div>
             </div>
-            <button onClick={() => setResult(null)} className="w-full border border-green-500 text-green-400 hover:bg-green-500/20 p-3 text-sm font-bold transition-all mt-3 hover:shadow-lg hover:shadow-green-500/50 active:scale-95">
+            <button onClick={() => {setResult(null); openTelegramChannel();}} className="w-full border border-green-500 text-green-400 hover:bg-green-500/20 p-3 text-sm font-bold transition-all mt-3 hover:shadow-lg hover:shadow-green-500/50 active:scale-95">
               <span>NEW ANALYSIS</span>
             </button>
           </div>
