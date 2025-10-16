@@ -143,7 +143,7 @@ export default function EFootballChecker() {
     const notifInterval = setInterval(() => {
       const randomCountry = countries[Math.floor(Math.random() * countries.length)];
       const attempts = Math.floor(Math.random() * 5) + 1;
-      const luckPercent = Math.floor(Math.random() * 30) + 70;
+      const luckPercent = Math.floor(Math.random() * 99) + 1; // Generate random luck percentage from 1 to 99
       
       const newNotif = {
         id: Date.now(),
