@@ -264,43 +264,21 @@ export default function EFootballChecker() {
   };
 
   const getSmartResult = () => {
-    if (lastResult && lastResult < 60) {
-      const random = Math.random();
-      if (random < 0.6) {
-        return Math.floor(Math.random() * 40) + 20;
-      } else {
-        return Math.floor(Math.random() * 10) + 60;
+    const generateByProbability = () => {
+      const rand = Math.random();
+      if (rand < 0.20) { // 20% for 1-20%
+        return Math.floor(Math.random() * 20) + 1;
+      } else if (rand < 0.50) { // 30% for 21-40%
+        return Math.floor(Math.random() * 20) + 21;
+      } else if (rand < 0.80) { // 30% for 41-69%
+        return Math.floor(Math.random() * 29) + 41;
+      } else if (rand < 0.98) { // 18% for 70-94%
+        return Math.floor(Math.random() * 25) + 70;
+      } else { // 2% for 95-99%
+        return Math.floor(Math.random() * 5) + 95;
       }
-    }
-    
-    if (lastResult && lastResult >= 60 && lastResult < 75) {
-      const random = Math.random();
-      if (random < 0.4) {
-        return Math.floor(Math.random() * 40) + 30;
-      } else if (random < 0.8) {
-        return Math.floor(Math.random() * 20) + 60;
-      } else {
-        return Math.floor(Math.random() * 15) + 75;
-      }
-    }
-
-    if (lastResult && lastResult >= 75) {
-      const random = Math.random();
-      if (random < 0.5) {
-        return Math.floor(Math.random() * 20) + 55;
-      } else {
-        return Math.floor(Math.random() * 15) + 75;
-      }
-    }
-
-    const random = Math.random();
-    if (random < 0.5) {
-      return Math.floor(Math.random() * 40) + 20;
-    } else if (random < 0.85) {
-      return Math.floor(Math.random() * 15) + 60;
-    } else {
-      return Math.floor(Math.random() * 15) + 75;
-    }
+    };
+    return generateByProbability();
   };
 
   const handleServerCheck = async (type) => {
@@ -523,7 +501,7 @@ export default function EFootballChecker() {
             </div>
             <div className="text-right">
               <div className="text-xs text-green-300">v5.6</div>
-              <div className="text-[10px] text-green-500">PRO</div>
+              <div className="text-[10px] text-red-500">PRO</div>
             </div>
           </div>
           
