@@ -27,7 +27,13 @@ export default function EFootballChecker() {
   const canvasRef = useRef(null);
   const terminalRef = useRef(null);
 
-  const countries = ['Egypt 🇪🇬', 'Saudi Arabia 🇸🇦', 'UAE 🇦🇪', 'Morocco 🇲🇦', 'Jordan 🇯🇴', 'Iraq 🇮🇶', 'Kuwait 🇰🇼', 'Lebanon 🇱🇧', 'Tunisia 🇹🇳'];
+  const countries = [
+    'Egypt 🇪🇬', 'Saudi Arabia 🇸🇦', 'UAE 🇦🇪', 'Morocco 🇲🇦', 'Jordan 🇯🇴', 'Iraq 🇮🇶', 'Kuwait 🇰🇼', 'Lebanon 🇱🇧', 'Tunisia 🇹🇳',
+    'Algeria 🇩🇿', 'Bahrain 🇧🇭', 'Qatar 🇶🇦', 'Oman 🇴🇲', 'Palestine 🇵🇸', 'Syria 🇸🇾', 'Sudan 🇸🇩', 'Libya 🇱🇾', 'Yemen 🇾🇪',
+    'United States 🇺🇸', 'Canada 🇨🇦', 'Mexico 🇲🇽', 'Brazil 🇧🇷', 'Argentina 🇦🇷', 'United Kingdom 🇬🇧', 'France 🇫🇷', 'Germany 🇩🇪', 'Italy 🇮🇹', 'Spain 🇪🇸',
+    'Russia 🇷🇺', 'China 🇨🇳', 'Japan 🇯🇵', 'India 🇮🇳', 'Australia 🇦🇺', 'South Africa 🇿🇦', 'Nigeria 🇳🇬', 'Kenya 🇰🇪', 'Turkey 🇹🇷', 'Indonesia 🇮🇩',
+    'Pakistan 🇵🇰', 'Bangladesh 🇧🇩', 'Philippines 🇵🇭', 'Vietnam 🇻🇳', 'Thailand 🇹🇭', 'Malaysia 🇲🇾', 'Singapore 🇸🇬', 'South Korea 🇰🇷', 'New Zealand 🇳🇿'
+  ];
 
   // Play beep sound
   const playBeep = (frequency = 800, duration = 100) => {
