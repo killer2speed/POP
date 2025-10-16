@@ -281,6 +281,18 @@ export default function EFootballChecker() {
     return generateByProbability();
   };
 
+  const isMaintenanceMode = () => {
+    const now = new Date();
+    const utcDay = now.getUTCDay(); // 0 for Sunday, 4 for Thursday
+    const utcHours = now.getUTCHours();
+
+    // Maintenance is on Thursday (day 4) from 2:00 to 8:00 UTC
+    if (utcDay === 4 && utcHours >= 2 && utcHours < 8) {
+      return true;
+    }
+    return false;
+  };
+
   const openTelegramChannel = () => {
     setTimeout(() => {
       window.open('https://t.me/pes224', '_blank');
@@ -289,6 +301,28 @@ export default function EFootballChecker() {
 
   const handleServerCheck = async (type) => {
     if (cooldown > 0) return;
+
+    if (isMaintenanceMode()) {
+      setResult({
+        recommendation: {
+          border: "border-red-500",
+          bg: "bg-red-500/10",
+          color: "text-red-400",
+          icon: "⚠️",
+          text: "SERVER MAINTENANCE",
+          subtext: "eFootball servers are currently under maintenance. Please try again later"
+        },
+        timestamp: new Date().toLocaleTimeString(),
+        server: "N/A",
+        percent: 0,
+        ping: 0,
+        boxType: type
+      });
+      setConnecting(false);
+      setAnalyzing(false);
+      setShowResultAnimation(true);
+      return;
+    }
 
     playBeep(1000, 100);
     setBoxType(type);
@@ -301,7 +335,7 @@ export default function EFootballChecker() {
     setAnalyzing(false);
     setShowResultAnimation(false);
 
-    setCurrentStage('INITIATING BREACH PROTOCOL...');
+    setCurrentStage("INITIATING BREACH PROTOCOL...");
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     const totalDuration = Math.floor(Math.random() * 20000) + 25000;
@@ -478,7 +512,7 @@ export default function EFootballChecker() {
 
       {/* Success Notifications */}
       <div className="fixed top-2 left-2 right-2 z-50 space-y-2">
-        {notifications.map((notif) => (
+         {!isMaintenanceMode() && notifications.map(notif => ((
           <div 
             key={notif.id}
             className="bg-green-900/90 border border-green-500 p-2 text-xs animate-slideIn backdrop-blur-sm shadow-lg shadow-green-500/50"
