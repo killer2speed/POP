@@ -512,7 +512,7 @@ export default function EFootballChecker() {
 
       {/* Success Notifications */}
       <div className="fixed top-2 left-2 right-2 z-50 space-y-2">
-         {!isMaintenanceMode() && notifications.map(notif => ((
+         {!isMaintenanceMode() && notifications.map(notif => (
           <div 
             key={notif.id}
             className="bg-green-900/90 border border-green-500 p-2 text-xs animate-slideIn backdrop-blur-sm shadow-lg shadow-green-500/50"
