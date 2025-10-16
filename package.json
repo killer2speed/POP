@@ -1,7 +1,7 @@
 {
   "name": "match-pulse-analyzer",
   "private": true,
-  "version": "0.0.0",
+  "version": "5.6 Pro",
   "type": "module",
   "scripts": {
     "dev": "vite",

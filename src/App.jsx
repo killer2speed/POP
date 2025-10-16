@@ -23,6 +23,7 @@ export default function EFootballChecker() {
   const [loading, setLoading] = useState(true);
   const [quickScanEpic, setQuickScanEpic] = useState(false);
   const [quickScanShowtime, setQuickScanShowtime] = useState(false);
+  const [serverTime, setServerTime] = useState("");
   const canvasRef = useRef(null);
   const terminalRef = useRef(null);
 
@@ -163,6 +164,18 @@ export default function EFootballChecker() {
       clearInterval(interval);
       clearInterval(notifInterval);
     };
+  }, []);
+
+  // Update server time every second
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      setServerTime(now.toLocaleDateString('en-US', options));
+    };
+    updateTime(); // Set initial time
+    const intervalId = setInterval(updateTime, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 
   // Matrix rain effect
@@ -509,7 +522,7 @@ export default function EFootballChecker() {
               <h2 className="text-xs text-green-300">SERVER ANALYZER</h2>
             </div>
             <div className="text-right">
-              <div className="text-xs text-green-300">v5.3</div>
+              <div className="text-xs text-green-300">v5.6</div>
               <div className="text-[10px] text-green-500">PRO</div>
             </div>
           </div>
@@ -526,6 +539,10 @@ export default function EFootballChecker() {
             <div className="flex justify-between">
               <span className="text-green-300">ACTIVE USERS:</span>
               <span className="font-bold text-cyan-400">{activeUsers}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-green-300">SERVER TIME:</span>
+              <span className="font-bold">{serverTime}</span>
             </div>
           </div>
         </div>
