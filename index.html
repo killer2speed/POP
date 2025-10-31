@@ -1,13 +1,243 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MatchPulse Analyzer - Server Status Checker</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyzer Server - تحديث جديد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #000000 0%, #0a3d0a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #00ff00;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .logo {
+            width: 300px;
+            max-width: 90%;
+            height: auto;
+            filter: drop-shadow(0 0 20px #00ff00);
+        }
+
+        .content-box {
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #00ff00;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .update-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+            font-family: 'Courier New', monospace;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 0, 0.6);
+            background: linear-gradient(45deg, #00cc00, #00ff00);
+        }
+
+        .update-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 5% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 700px;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 3px solid #00ff00;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+        }
+
+        .close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #00ff00;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .close:hover {
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000;
+            transform: rotate(90deg);
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content-box {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .update-btn {
+                font-size: 18px;
+                padding: 15px;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <svg class="logo" viewBox="0 0 1400 600" xmlns="http://www.w3.org/2000/svg">
+            <!-- Circle with binary code -->
+            <circle cx="350" cy="300" r="180" fill="none" stroke="#00ff00" stroke-width="8"/>
+            <text x="350" y="200" text-anchor="middle" fill="#00ff00" font-size="40" font-family="monospace">
+                1 0 1 0
+            </text>
+            <text x="350" y="250" text-anchor="middle" fill="#00ff00" font-size="40" font-family="monospace">
+                0 1 1  0
+            </text>
+            <text x="350" y="300" text-anchor="middle" fill="#00ff00" font-size="40" font-family="monospace">
+                1 1 0 1
+            </text>
+            <text x="350" y="350" text-anchor="middle" fill="#00ff00" font-size="40" font-family="monospace">
+                0 1 0 1
+            </text>
+            <text x="350" y="400" text-anchor="middle" fill="#00ff00" font-size="40" font-family="monospace">
+                1 0 1 1
+            </text>
+            
+            <!-- ANALYZER SERVER text -->
+            <text x="600" y="280" fill="#00ff00" font-size="110" font-weight="bold" font-family="Arial">ANALYZER</text>
+            <text x="600" y="400" fill="#00ff00" font-size="110" font-weight="bold" font-family="Arial">SERVER</text>
+        </svg>
+    </div>
+
+    <div class="content-box">
+        <h1>⚠️ يوجد تحديث جديد للتطبيق</h1>
+        <a href="https://t.me/pes224/21347" target="_blank" style="text-decoration: none;">
+            <button class="update-btn">
+                🔄 رجاءً الدخول هنا للتحديث
+            </button>
+        </a>
+    </div>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjE1MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjcwMCIgaGVpZ2h0PSIxNTAwIiBmaWxsPSIjMDAwMDAwIi8+CiAgCiAgPCEtLSBUb3AgQm94IC0tPgogIDxyZWN0IHg9IjMwIiB5PSIzMCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIzMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgCiAgPCEtLSBJUCBBZGRyZXNzIC0tPgogIDx0ZXh0IHg9IjYwIiB5PSI4MCIgZmlsbD0iIzAwZmYwMCIgZm9udC1zaXplPSIzMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+MTU2LjE5OS4xODguMTcxPC90ZXh0PgogIDx0ZXh0IHg9IjQ1MCIgeT0iODAiIGZpbGw9IiM1NWZmNTUiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPltJUCBBRERSRVNTXTwvdGV4dD4KICAKICA8IS0tIFNlcnZlciBTdGF0dXMgLS0+CiAgPHRleHQgeD0iNjAiIHk9IjE0MCIgZmlsbD0iIzAwZmYwMCIgZm9udC1zaXplPSIzMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+QUNUSVZFICZBIEFNUFM7IFNUQUJMRcKx4oWlPC90ZXh0PgogIDx0ZXh0IHg9IjQyMCIgeT0iMTQwIiBmaWxsPSIjNTVmZjU1IiBmb250LXNpemU9IjIwIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5bU0VSVkVSIFNUQVRVU108L3RleHQ+CiAgCiAgPCEtLSBPbmxpbmUgVXNlcnMgLS0+CiAgPHRleHQgeD0iNjAiIHk9IjIwMCIgZmlsbD0iIzAwZmYwMCIgZm9udC1zaXplPSIzMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+MTk1MzwvdGV4dD4KICA8dGV4dCB4PSI0MjAiIHk9IjIwMCIgZmlsbD0iIzU1ZmY1NSIgZm9udC1zaXplPSIyMCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+W09OTElORSBVU0VSU108L3RleHQ+CiAgCiAgPCEtLSBTZXJ2ZXIgVGltZSAtLT4KICA8dGV4dCB4PSI2MCIgeT0iMjYwIiBmaWxsPSIjMDBmZjAwIiBmb250LXNpemU9IjMyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj4wMjozMDoxODwvdGV4dD4KICA8dGV4dCB4PSI0MjAiIHk9IjI2MCIgZmlsbD0iIzU1ZmY1NSIgZm9udC1zaXplPSIyMCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+W1NFUlZFUiBUSU1FXTwvdGV4dD4KICAKICA8IS0tIFBpbmcgYW5kIFVwdGltZSBCb3hlcyAtLT4KICA8cmVjdCB4PSIzMCIgeT0iMzYwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjEyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBmZjAwIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8dGV4dCB4PSIxODUiIHk9IjQzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzAwZmYwMCIgZm9udC1zaXplPSI0MCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+NW1zPC90ZXh0PgogIDx0ZXh0IHg9IjE4NSIgeT0iNDYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNTVmZjU1IiBmb250LXNpemU9IjE4IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5bUElOR108L3RleHQ+CiAgCiAgPHJlY3QgeD0iMzYwIiB5PSIzNjAiIHdpZHRoPSIzMTAiIGhlaWdodD0iMTIwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMGZmMDAiIHN0cm9rZS13aWR0aD0iMyIvPgogIDx0ZXh0IHg9IjUxNSIgeT0iNDMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDBmZjAwIiBmb250LXNpemU9IjQwIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj45OS45JTwvdGV4dD4KICA8dGV4dCB4PSI1MTUiIHk9IjQ2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzU1ZmY1NSIgZm9udC1zaXplPSIxOCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+W1VQVElNRV08L3RleHQ+CiAgCiAgPCEtLSBWZXJzaW9uIGFuZCBOZXcgVG9kYXkgQm94ZXMgLS0+CiAgPHJlY3QgeD0iMzAiIHk9IjUwMCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIxMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPHRleHQgeD0iMTg1IiB5PSI1NzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMwMGZmMDAiIGZvbnQtc2l6ZT0iNDAiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPjUuNzwvdGV4dD4KICA8dGV4dCB4PSIxODUiIHk9IjYwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzU1ZmY1NSIgZm9udC1zaXplPSIxOCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+W1ZFUlNJT05dPC90ZXh0PgogIAogIDxyZWN0IHg9IjM2MCIgeT0iNTAwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjEyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBmZjAwIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8dGV4dCB4PSI1MTUiIHk9IjU3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzAwZmYwMCIgZm9udC1zaXplPSI0MCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+NTk2KzwvdGV4dD4KICA8dGV4dCB4PSI1MTUiIHk9IjYwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzU1ZmY1NSIgZm9udC1zaXplPSIxOCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+W05FVyBUT0RBWV08L3RleHQ+CiAgCiAgPCEtLSBFUElDIEJPWCBTQ0FOIC0tPgogIDxyZWN0IHg9IjMwIiB5PSI2NTAiIHdpZHRoPSI2NDAiIGhlaWdodD0iMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmMDAiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxyZWN0IHg9IjMwIiB5PSI2NTAiIHdpZHRoPSI2NDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZmZmZjAwIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgogIDx0ZXh0IHg9IjM1MCIgeT0iNzEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZjAwIiBmb250LXNpemU9IjM1IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXdlaWdodD0iYm9sZCI+RVBJQSBCT1ggU0NBTiDwn46uPC90ZXh0PgogIAogIDwhLS0gU0hPV1RJTUUgQk9YIFNDQU4gLS0+CiAgPHJlY3QgeD0iMzAiIHk9Ijc3MCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmMDBmZiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPHJlY3QgeD0iMzAiIHk9Ijc3MCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiNmZjAwZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CiAgPHRleHQgeD0iMzUwIiB5PSI4MzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZjAwZmYiIGZvbnQtc2l6ZT0iMzUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtd2VpZ2h0PSJib2xkIj5TSE9XVElNRSBCT1ggU0NBTiDwn46vPC90ZXh0PgogIAogIDwhLS0gUE9UVyBCT1ggU0NBTiAtLT4KICA8cmVjdCB4PSIzMCIgeT0iODkwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjEwMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBmZjAwIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8cmVjdCB4PSIzMCIgeT0iODkwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzAwZmYwMCIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KICA8dGV4dCB4PSIzNTAiIHk9Ijk1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzAwZmYwMCIgZm9udC1zaXplPSIzNSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9ImJvbGQiPlBPVFcgQk9YIFNDQU4g4q2Q77iPPC90ZXh0PgogIAogIDwhLS0gSk9JTiBURUxFR1JBTSBDSEFOTkVMIC0tPgogIDxyZWN0IHg9IjMwIiB5PSIxMDEwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjEwMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBhOGZmIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8cmVjdCB4PSIzMCIgeT0iMTAxMCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMwMGE4ZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CiAgPHRleHQgeD0iMzUwIiB5PSIxMDcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDBhOGZmIiBmb250LXNpemU9IjMyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXdlaWdodD0iYm9sZCI+Sk9JTiBURUxFR1JBTSBDSEFOTkVMIPCfk7E8L3RleHQ+CiAgCiAgPCEtLSBGb290ZXIgLS0+CiAgPHRleHQgeD0iMzUwIiB5PSIxMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDBmZjAwIiBmb250LXNpemU9IjE2IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5bUE9XRVJFRCBCWSBFUE9PVEJBTEwgUFJPIMKpIDIwMjVdPC90ZXh0Pgo8L3N2Zz4=" alt="Server Dashboard" class="modal-image">
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('imageModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal when clicking ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
 </html>
